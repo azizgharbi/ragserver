@@ -61,7 +61,7 @@ prompt = PromptTemplate(
     input_variables=["question", "document"],
 )
 
-# Initialize the LLM with Llama 3.1 model
+# Initialize the LLM with Llama 3.2 model
 llm = ChatOllama(
     model="llama3.2",
     temperature=0,
