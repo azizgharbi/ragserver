@@ -33,7 +33,7 @@ for doc in docs_lazy:
     docs.append(doc)
 
 # Initialize text splitter
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 doc_splits = text_splitter.split_documents(docs)
 
 # Sentence Transformers (faster, good for semantic search)
@@ -46,7 +46,7 @@ vectorstore = SKLearnVectorStore.from_documents(
     documents=doc_splits,
     embedding=embeddings
 )
-retriever = vectorstore.as_retriever(k=4)
+retriever = vectorstore.as_retriever(k = 1)
 
  # Define the prompt template for the LLM
 prompt = PromptTemplate(
