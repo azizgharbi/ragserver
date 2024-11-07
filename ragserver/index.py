@@ -65,7 +65,7 @@ prompt = PromptTemplate(
     Documents: {documents}
     Answer:
     """,
-    input_variables=["question", "documents"],
+    input_variables=["question", "document"],
 )
 
 # Initialize the LLM with Llama 3.1 model
@@ -88,7 +88,7 @@ class RAGApplication:
         # Extract content from retrieved documents
         print("Extracting content from documents...")
         # Get the answer from the language model
-        answer = self.rag_chain.invoke({"question": question, "documents": document})
+        answer = self.rag_chain.invoke({"question": question, "document": document})
         return answer
 
 # Initialize the RAG application
