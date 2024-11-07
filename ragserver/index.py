@@ -84,11 +84,11 @@ class RAGApplication:
         self.rag_chain = rag_chain
     def run(self, question):
         # Retrieve relevant documents
-        documents = self.retriever.invoke(question)
+        document = self.retriever.invoke(question)
         # Extract content from retrieved documents
-        doc_texts = "\\n".join([doc.page_content for doc in documents])
+        print("Extracting content from documents...")
         # Get the answer from the language model
-        answer = self.rag_chain.invoke({"question": question, "documents": doc_texts})
+        answer = self.rag_chain.invoke({"question": question, "documents": document})
         return answer
 
 # Initialize the RAG application
