@@ -31,16 +31,9 @@ docs = []
 docs_lazy = loader.lazy_load()
 for doc in docs_lazy:
     docs.append(doc)
-# print(docs[0].page_content)
-# print(docs[0].metadata)
 
 # Initialize text splitter
-text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-    chunk_size=250, 
-    chunk_overlap=0
-)
-
-# Split documents
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 doc_splits = text_splitter.split_documents(docs)
 
 # Sentence Transformers (faster, good for semantic search)
@@ -58,11 +51,11 @@ retriever = vectorstore.as_retriever(k=4)
  # Define the prompt template for the LLM
 prompt = PromptTemplate(
     template="""You are an assistant for question-answering tasks.
-    Use the following documents to answer the question.
+    Use the following document to answer the question.
     If you don't know the answer, just say that you don't know.
-    Use ten sentences maximum and keep the answer concise:
+    Use 10 sentences maximum and keep the answer concise:
     Question: {question}
-    Documents: {documents}
+    Documents: {document}
     Answer:
     """,
     input_variables=["question", "document"],
@@ -79,18 +72,19 @@ rag_chain = prompt | llm | StrOutputParser()
 
 # Define the RAG application class
 class RAGApplication:
+    ## Define the constructor for the RAG application
     def __init__(self, retriever, rag_chain):
         self.retriever = retriever
         self.rag_chain = rag_chain
+    ## Define the run method for the RAG application
     def run(self, question):
         # Retrieve relevant documents
         document = self.retriever.invoke(question)
         # Extract content from retrieved documents
         print("Extracting content from documents...")
         # Get the answer from the language model
-        answer = self.rag_chain.invoke({"question": question, "document": document})
+        answer = self.rag_chain.invoke({"question": question, "document": document[0].page_content})
         return answer
 
 # Initialize the RAG application
 rag_application = RAGApplication(retriever, rag_chain)
-
