@@ -1,21 +1,15 @@
-## Rag server using Ollama:
+# RAGServer Using Ollama
 
-- A RAG model using `Ollama`. Using `wikipedia` as the knowledge source.
+A Retrieval-Augmented Generation (RAG) model using `Ollama` as the backbone, with `Wikipedia` serving as the primary knowledge source.
 
-## Create a new environment
-- python3 -m venv `env_name`.
+## Project Setup
 
-## activate the environment
-- source `env_name`/bin/activate.
-
-## Install
-- pip install -r `requirements.txt`.
-- (If you are using a CPU machine, you can install the nightly version of torch), `pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu`.
-
-## Upgrade
-- pip install --upgrade -r `requirements.txt`.
-
-## Freeze
-- pip freeze > `requirements.txt`.
-
-
+### 1. Create a New Python Environment
+To isolate dependencies, create a virtual environment:
+```bash
+python3 -m venv env_name
+source env_name/bin/activate
+pip install -r requirements.txt
+# for macos
+pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
+```
